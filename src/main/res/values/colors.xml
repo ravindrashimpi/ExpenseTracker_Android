@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#425C59</color>
+    <color name="colorPrimaryDark">#314342</color>
+    <color name="colorAccent">#E8D9AE</color>
+    <color name="windowBackground">#ffffff</color>
+    <color name="navigationBarColor">#779A98</color>
+    <color name="textColorPrimary">#E8D9AE</color>
+    <color name="btnColor">#ffcea3</color>
+    <color name="textColorDisable">#bdc9c9</color>
+    <color name="error_color">#FFF493</color>
+    <color name="cardViewBG">#4D6A69</color>
+    <color name="background">#F5F6F8</color>
+</resources>
