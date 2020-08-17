@@ -31,7 +31,11 @@ class SignUpFragment : Fragment(), View.OnClickListener, View.OnFocusChangeListe
     private lateinit var user: UserEntity
     var TAG = "SignUpFragment"
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         //Do the binding of the Fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
 
@@ -45,7 +49,8 @@ class SignUpFragment : Fragment(), View.OnClickListener, View.OnFocusChangeListe
         val userDao: UserDAO = ExpenseTrackerDB.getInstance(application).userDao
         val userRepository: UserRepository = UserRepository(userDao)
         val userViewModelFactory: UserViewModelFactory = UserViewModelFactory(userRepository)
-        userViewModel = ViewModelProviders.of(this, userViewModelFactory).get(UserViewModel::class.java)
+        userViewModel =
+            ViewModelProviders.of(this, userViewModelFactory).get(UserViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,7 +71,7 @@ class SignUpFragment : Fragment(), View.OnClickListener, View.OnFocusChangeListe
     }
 
     override fun onClick(v: View?) {
-        when(v!!.id) {
+        when (v!!.id) {
             R.id.registerBTN -> {
                 var isValid: Boolean = true
                 if (binding.firstName.text.toString().isEmpty()) {
@@ -88,7 +93,7 @@ class SignUpFragment : Fragment(), View.OnClickListener, View.OnFocusChangeListe
                     isValid = true
                 }
 
-                if(isValid) {
+                if (isValid) {
                     val userEntity = UserEntity(
                         0,
                         binding.firstName.text.toString(),
@@ -107,7 +112,7 @@ class SignUpFragment : Fragment(), View.OnClickListener, View.OnFocusChangeListe
     }
 
     override fun onFocusChange(v: View?, hasFocus: Boolean) {
-        when(v!!.id) {
+        when (v!!.id) {
 //            R.id.firstName -> { if(!hasFocus) binding.firstNameInputLayout.error = "" }
 //            R.id.lastName -> { if(!hasFocus) binding.lastNameInputLayout.error = "" }
 //            R.id.emailid -> { if(!hasFocus) binding.regEmailIdInputLayout.error = "" }
@@ -119,7 +124,6 @@ class SignUpFragment : Fragment(), View.OnClickListener, View.OnFocusChangeListe
     override fun onDestroyView() {
         super.onDestroyView()
     }
-
 
 
 }

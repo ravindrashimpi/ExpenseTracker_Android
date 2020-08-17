@@ -3,18 +3,12 @@ package com.deere.exptracker.category
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BlendMode
 import android.graphics.Color
-import android.graphics.ColorFilter
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.Icon
-import android.media.Image
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -22,10 +16,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import com.deere.exptracker.DAO.CategoryDAO
 import com.deere.exptracker.R
-import com.deere.exptracker.databinding.FragmentCategoryBinding
 import com.deere.exptracker.databinding.FragmentNewCategoryBinding
 import com.deere.exptracker.entity.CategoryEntity
 import com.deere.exptracker.entity.UserEntity
@@ -37,8 +29,6 @@ import com.deere.exptracker.util.IconFragment
 import com.deere.exptracker.util.SessionManagement
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_icon.view.*
-import kotlinx.android.synthetic.main.list_expense.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -63,7 +53,11 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
     lateinit var sessionManagement: SessionManagement
     lateinit var userEntity: UserEntity
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentNewCategoryBinding.inflate(inflater, container, false)
 
         //Inisitalize Session Management Object
@@ -77,8 +71,11 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
         //Get data from Bundle
         var bundleObj = arguments
         var gson = Gson()
-        if(bundleObj != null) {
-            selectedCategory = gson.fromJson<CategoryEntity>((bundleObj.get("CATEGORY_OBJ") as String), CategoryEntity::class.java)
+        if (bundleObj != null) {
+            selectedCategory = gson.fromJson<CategoryEntity>(
+                (bundleObj.get("CATEGORY_OBJ") as String),
+                CategoryEntity::class.java
+            )
             binding.categoryName.setText(selectedCategory!!.categoryName.toString())
             changeImageColorOnSelection(getBindingImage(selectedCategory!!.categoryImg))
             iconSeleted = selectedCategory!!.categoryImg
@@ -86,7 +83,6 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
             binding.screenLabel.setText("Update Category")
             Log.d(TAG, "UPDATE CATEGORY: ${bundleObj}")
         }
-
 
         return binding.root
     }
@@ -125,7 +121,7 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v!!.id) {
+        when (v!!.id) {
 //           R.id.categoryIcon -> {
 //               Log.d(TAG, "onClick: Category Icon Clicked")
 //               iconFragment = IconFragment()
@@ -134,12 +130,17 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
 //               iconFragment.show(ft, "IconFragment")
 //           }
             R.id.addCategory -> {
-                if(selectedCategory != null) {
+                if (selectedCategory != null) {
                     //Edit Category
-                    var editCategoryEntity = CategoryEntity(selectedCategory!!.caregoryId, binding.categoryName.text.toString(), iconSeleted, userEntity.userId)
+                    var editCategoryEntity = CategoryEntity(
+                        selectedCategory!!.caregoryId,
+                        binding.categoryName.text.toString(),
+                        iconSeleted,
+                        userEntity.userId
+                    )
                     CoroutineScope(Dispatchers.IO).launch {
                         var isUpdated = editCategory(editCategoryEntity)
-                        if(isUpdated != -1) {
+                        if (isUpdated != -1) {
                             withContext(Dispatchers.Main) {
                                 displayDialog("Message", "Category updated.")
                                 dismiss()
@@ -158,7 +159,12 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
                     if (validateInputs(binding)) {
                         Log.d(TAG, "ADD CAREGORY NAME: ${binding.categoryName.text.toString()}")
                         Log.d(TAG, "ADD IMAGE: ${iconSeleted}")
-                        var categoryEntity = CategoryEntity(0, binding.categoryName.text.toString(), iconSeleted, userEntity.userId)
+                        var categoryEntity = CategoryEntity(
+                            0,
+                            binding.categoryName.text.toString(),
+                            iconSeleted,
+                            userEntity.userId
+                        )
                         CoroutineScope(Dispatchers.IO).launch {
                             var isAdded = addCategory(categoryEntity)
                             Log.d(TAG, "CATEGORY IS ADDED: ${isAdded}")
@@ -263,7 +269,7 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
                 changeImageColorOnSelection(binding.tea)
             }
             R.id.medical -> {
-                iconSeleted =  "ic_medical"
+                iconSeleted = "ic_medical"
                 binding.medical.setColorFilter(Color.parseColor("#FE8558"))
                 changeImageColorOnSelection(binding.medical)
             }
@@ -281,7 +287,7 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
     }
 
     private fun changeImageColorOnSelection(img: ImageView) {
-        if(tempImageView != null) {
+        if (tempImageView != null) {
             if (tempImageView!!.colorFilter.equals(img.colorFilter)) {
                 img.setColorFilter(Color.parseColor("#FE8558"))
                 tempImageView!!.setColorFilter(Color.parseColor("#605E5E"))
@@ -310,11 +316,11 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d(TAG, "onActivityResult: resultCode: ${resultCode} requestCode: ${requestCode}")
-        if(resultCode != Activity.RESULT_OK) {
+        if (resultCode != Activity.RESULT_OK) {
             return
         }
 
-        if(requestCode == TARGET_FRAGMENT_REQUEST_CODE) {
+        if (requestCode == TARGET_FRAGMENT_REQUEST_CODE) {
             //binding.categoryIcon.setText(data!!.getStringExtra("imgName"))
             //binding.categoryIcon.setCompoundDrawablesWithIntrinsicBounds(changeIconSize(data), null, null, null)
         }
@@ -323,9 +329,9 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
     /**
      * Below method will be used under IconFragmentDialog to send data back to this fragment
      */
-    public fun newIntent(imgSrc: Int, imgName: String) : Intent {
+    public fun newIntent(imgSrc: Int, imgName: String): Intent {
         var intent = Intent()
-        intent.putExtra ("imgSrc", imgSrc)
+        intent.putExtra("imgSrc", imgSrc)
         intent.putExtra("imgName", imgName)
         return intent
     }
@@ -334,9 +340,10 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
      * Method used to change the size of icon
      */
     private fun changeIconSize(data: Intent): Drawable {
-        var icon: Drawable = resources.getDrawable(data!!.getIntExtra("imgSrc",0))
+        var icon: Drawable = resources.getDrawable(data!!.getIntExtra("imgSrc", 0))
         var bitMap = (icon as BitmapDrawable).bitmap
-        var d = BitmapDrawable(resources, Bitmap.createScaledBitmap(bitMap, 80, 80, true)) as Drawable
+        var d =
+            BitmapDrawable(resources, Bitmap.createScaledBitmap(bitMap, 80, 80, true)) as Drawable
         return d
     }
 
@@ -348,8 +355,10 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
         val application = requireNotNull(this.activity).application
         val categoryDao: CategoryDAO = ExpenseTrackerDB.getInstance(application).categoryDao
         val categoryRepository: CategoryRepository = CategoryRepository(categoryDao)
-        val categoryViewModelFactory: CategoryViewModelFactory = CategoryViewModelFactory(categoryRepository)
-        categoryViewModel = ViewModelProviders.of(this, categoryViewModelFactory).get(CategoryViewModel::class.java)
+        val categoryViewModelFactory: CategoryViewModelFactory =
+            CategoryViewModelFactory(categoryRepository)
+        categoryViewModel =
+            ViewModelProviders.of(this, categoryViewModelFactory).get(CategoryViewModel::class.java)
     }
 
     /**
@@ -358,11 +367,11 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
     private fun validateInputs(binding: FragmentNewCategoryBinding): Boolean {
         return when {
             binding.categoryName.text.toString().isEmpty() -> {
-                displayDialog("Warning","Please enter the Category Name.")
+                displayDialog("Warning", "Please enter the Category Name.")
                 false
             }
             iconSeleted.isEmpty() -> {
-                displayDialog("Warning","Please select Icon for category.")
+                displayDialog("Warning", "Please select Icon for category.")
                 false
             }
             else -> {
@@ -378,7 +387,7 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
         MaterialAlertDialogBuilder(context)
             .setTitle(title)
             .setMessage(message)
-            .setPositiveButton(resources.getString(R.string.dialogOk)) { dialog, id ->}
+            .setPositiveButton(resources.getString(R.string.dialogOk)) { dialog, id -> }
             .show()
     }
 
@@ -386,7 +395,7 @@ class NewCategoryFragment : DialogFragment(), View.OnClickListener {
      * Function used to get the binding image
      */
     private fun getBindingImage(imageName: String): ImageView {
-        when(imageName) {
+        when (imageName) {
             "ic_travel" -> return binding.travel
             "ic_cloths" -> return binding.cloths
             "ic_eating_out" -> return binding.eatingOut

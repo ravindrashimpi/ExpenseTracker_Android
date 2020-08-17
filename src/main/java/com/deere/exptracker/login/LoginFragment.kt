@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -15,16 +14,13 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.deere.exptracker.DAO.UserDAO
 import com.deere.exptracker.R
-import com.deere.exptracker.dashboard.DashboardFragment
 import com.deere.exptracker.databinding.FragmentLoginBinding
-import com.deere.exptracker.entity.UserEntity
 import com.deere.exptracker.model.UserViewModel
 import com.deere.exptracker.model.UserViewModelFactory
 import com.deere.exptracker.repository.UserRepository
 import com.deere.exptracker.signup.FakeUserViewModel
 import com.deere.exptracker.signup.FakeUserViewModelFactory
 import com.deere.exptracker.util.ExpenseTrackerDB
-import com.deere.exptracker.util.InjectorUtil
 import com.deere.exptracker.util.SessionManagement
 
 class LoginFragment : Fragment(), View.OnClickListener {
@@ -38,7 +34,11 @@ class LoginFragment : Fragment(), View.OnClickListener {
     lateinit var selectedFragment: Fragment
     var TAG = "LoginFragment"
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         Log.d(TAG, "onCreateView started")
 
         //Do the binding of the Fragment
@@ -54,7 +54,8 @@ class LoginFragment : Fragment(), View.OnClickListener {
         val userDao: UserDAO = ExpenseTrackerDB.getInstance(application).userDao
         val userRepository: UserRepository = UserRepository(userDao)
         val userViewModelFactory: UserViewModelFactory = UserViewModelFactory(userRepository)
-        userViewModel = ViewModelProviders.of(this, userViewModelFactory).get(UserViewModel::class.java)
+        userViewModel =
+            ViewModelProviders.of(this, userViewModelFactory).get(UserViewModel::class.java)
 
         //Initialize the sessionManagement Object
         sessionManagement = SessionManagement(application.applicationContext)
@@ -74,38 +75,42 @@ class LoginFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v!!.id) {
+        when (v!!.id) {
             R.id.SignIn -> {
-                                var isValid: Boolean = true
-                                if (binding.emailid.text.toString().isEmpty()) {
-                                    //binding.passwordInputLayout.isErrorEnabled = false
-                                    //binding.emailIdInputLayout.error = "Email Id is mandatory."
-                                    isValid = false
-                                } else if(binding.password.text.toString().isEmpty()) {
-                                   // binding.emailIdInputLayout.isErrorEnabled = false
-                                    //binding.passwordInputLayout.error = "Password is mandatory."
-                                    isValid = false
-                                } else {
-                                    //binding.emailIdInputLayout.isErrorEnabled = false
-                                    //binding.passwordInputLayout.isErrorEnabled = false
-                                    isValid = true
-                                }
+                var isValid: Boolean = true
+                if (binding.emailid.text.toString().isEmpty()) {
+                    //binding.passwordInputLayout.isErrorEnabled = false
+                    //binding.emailIdInputLayout.error = "Email Id is mandatory."
+                    isValid = false
+                } else if (binding.password.text.toString().isEmpty()) {
+                    // binding.emailIdInputLayout.isErrorEnabled = false
+                    //binding.passwordInputLayout.error = "Password is mandatory."
+                    isValid = false
+                } else {
+                    //binding.emailIdInputLayout.isErrorEnabled = false
+                    //binding.passwordInputLayout.isErrorEnabled = false
+                    isValid = true
+                }
 
-                                if(isValid) {
-                                    Log.d(TAG,"EmailId: ${binding.emailid.text.toString()}")
-                                    Log.d(TAG,"Password: ${binding.password.text.toString()}")
-                                    //userViewModel.deleteAllUser()
-                                    userViewModel.validateUser(binding.emailid.text.toString(), binding.password.text.toString()).observe(viewLifecycleOwner, Observer { userEntity ->
-                                        Log.d(TAG, "IS User Valid: ${userEntity}")
-                                        if(userEntity != null) {
-                                            navController.navigate(R.id.action_loginFragment_to_dashboardFragment)
-                                            sessionManagement.saveSession(userEntity)
-                                        } else {
-                                            Toast.makeText(context, "Invalid EmailId/Password.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    })
-                                }
-                            }
+                if (isValid) {
+                    Log.d(TAG, "EmailId: ${binding.emailid.text.toString()}")
+                    Log.d(TAG, "Password: ${binding.password.text.toString()}")
+                    //userViewModel.deleteAllUser()
+                    userViewModel.validateUser(
+                        binding.emailid.text.toString(),
+                        binding.password.text.toString()
+                    ).observe(viewLifecycleOwner, Observer { userEntity ->
+                        Log.d(TAG, "IS User Valid: ${userEntity}")
+                        if (userEntity != null) {
+                            navController.navigate(R.id.action_loginFragment_to_dashboardFragment)
+                            sessionManagement.saveSession(userEntity)
+                        } else {
+                            Toast.makeText(context, "Invalid EmailId/Password.", Toast.LENGTH_SHORT)
+                                .show();
+                        }
+                    })
+                }
+            }
             R.id.registerLink -> navController.navigate(R.id.action_loginFragment_to_signUpFragment)
         }
     }

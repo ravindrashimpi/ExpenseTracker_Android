@@ -8,15 +8,15 @@ import androidx.room.PrimaryKey
 data class CategoryEntity(
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name="categoryId")
+    @ColumnInfo(name = "categoryId")
     val caregoryId: Int,
 
-    @ColumnInfo(name="categoryName")
+    @ColumnInfo(name = "categoryName")
     val categoryName: String,
 
-    @ColumnInfo(name="categoryImg")
+    @ColumnInfo(name = "categoryImg")
     val categoryImg: String,
 
-    @ColumnInfo(name="userId")
+    @ColumnInfo(name = "userId")
     val userId: Int
-){}
+) {}

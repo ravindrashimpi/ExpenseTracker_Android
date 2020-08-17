@@ -11,12 +11,12 @@ import com.deere.exptracker.repository.UserRepository
 import kotlinx.coroutines.launch
 
 class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
-    fun validateUser(emailId: String, password: String) : LiveData<UserEntity> {
+    fun validateUser(emailId: String, password: String): LiveData<UserEntity> {
         var userObj = MutableLiveData<UserEntity>();
         viewModelScope.launch {
             var user: UserEntity = userRepository.validateUser(emailId, password)
             Log.d("UserViewModel", "ValidateUser: ${user}")
-            if(user != null) {
+            if (user != null) {
                 userObj.postValue(user)
             } else {
                 userObj.postValue(null)

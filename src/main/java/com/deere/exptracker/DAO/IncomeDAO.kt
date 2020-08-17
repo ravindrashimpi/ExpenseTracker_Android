@@ -9,7 +9,7 @@ interface IncomeDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addIncome(income: IncomeEntity): Long
 
-//    @Update
+    //    @Update
 //    suspend fun updateIncome(income: IncomeEntity): Int
     @Query("UPDATE Income SET incomeAmt = :amount WHERE userId = :pUserId")
     suspend fun updateIncome(amount: Double, pUserId: Int): Int
@@ -22,4 +22,4 @@ interface IncomeDAO {
 
     @Query("UPDATE Income SET totalExpenseAmt = ((SELECT SUM(totalExpenseAmt) FROM Income WHERE userId = :pUserId) + :newExpAmt) WHERE userId = :pUserId and strftime('%Y/%m',incomeDate) = :pIncomeDate")
     suspend fun updateExpenseInIncome(pUserId: Int, newExpAmt: Double, pIncomeDate: String): Int
- }
+}

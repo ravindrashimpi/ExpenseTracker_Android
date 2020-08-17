@@ -14,7 +14,8 @@ class FakeUserRepository private constructor(private val userDao: FakeUserDAO) {
     }
 
     companion object {
-        @Volatile private var instance: FakeUserRepository? = null
+        @Volatile
+        private var instance: FakeUserRepository? = null
 
         fun getInstance(userDao: FakeUserDAO) =
             instance ?: synchronized(this) {

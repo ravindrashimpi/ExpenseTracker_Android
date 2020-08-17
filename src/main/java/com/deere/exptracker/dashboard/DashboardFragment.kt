@@ -16,7 +16,6 @@ import com.deere.exptracker.R
 import com.deere.exptracker.category.ListCategoryFragment
 import com.deere.exptracker.chart.ChartFragment
 import com.deere.exptracker.databinding.FragmentDashboardBinding
-import com.deere.exptracker.entity.ExpenseCategoryEntity
 import com.deere.exptracker.expense.ExpenseFragment
 import com.deere.exptracker.expense.ExpenseList
 import com.deere.exptracker.income.IncomeFragment
@@ -44,7 +43,11 @@ class DashboardFragment : Fragment(), NavigationView.OnNavigationItemSelectedLis
     lateinit var topNavView: NavigationView
     lateinit var toolBar: Toolbar
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         Log.d(TAG, "onCreateView started")
 
         //Do the binding of the Fragment
@@ -75,7 +78,13 @@ class DashboardFragment : Fragment(), NavigationView.OnNavigationItemSelectedLis
 
 
         /*----------------Navigation Drawer Menu------------------*/
-        var toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(activity, drawerLayout, toolBar, R.string.open_drawer, R.string.close_drawer)
+        var toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(
+            activity,
+            drawerLayout,
+            toolBar,
+            R.string.open_drawer,
+            R.string.close_drawer
+        )
 //        var toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(activity, drawerLayout, R.string.open_drawer, R.string.close_drawer)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -87,7 +96,7 @@ class DashboardFragment : Fragment(), NavigationView.OnNavigationItemSelectedLis
 
         //Call the BottomNavigationMenu actions
         var userEntity = sessionManagement.getSession()
-        if(userEntity != null) {
+        if (userEntity != null) {
             chartFragment = ChartFragment()
             requireActivity().supportFragmentManager
                 .beginTransaction()
@@ -98,59 +107,59 @@ class DashboardFragment : Fragment(), NavigationView.OnNavigationItemSelectedLis
 
         var bottomNavigationView = binding.bottomNavigationView
         bottomNavigationView.setOnItemSelectedListener { item ->
-                when(item) {
-                    R.id.listCategoryFragment -> {
-                            categoryFragment = ListCategoryFragment()
-                            (activity as AppCompatActivity).supportActionBar?.setTitle("Categories")
-                            requireActivity().supportFragmentManager
-                                .beginTransaction()
-                                .replace(R.id.fragment_container, categoryFragment)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                .addToBackStack(null)
-                                .commit()
-                        }
-                    R.id.dashboardFragment -> {
-                            chartFragment = ChartFragment()
-                            (activity as AppCompatActivity).supportActionBar?.setTitle("Dashboard")
-                            requireActivity().supportFragmentManager
-                                .beginTransaction()
-                                .replace(R.id.fragment_container, chartFragment)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                .addToBackStack(null)
-                                .commit()
-                        }
-                    R.id.expenseFragment -> {
-                            listExpenseFragment =
-                                ExpenseList()
-                            (activity as AppCompatActivity).supportActionBar?.setTitle("Expense List")
-                            requireActivity().supportFragmentManager
-                                .beginTransaction()
-                                .replace(R.id.fragment_container, listExpenseFragment)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                .addToBackStack(null)
-                                .commit()
-                        }
-                    R.id.incomeFragment -> {
-                        incomeFragment = IncomeFragment()
-                        (activity as AppCompatActivity).supportActionBar?.setTitle("Income")
-                        requireActivity().supportFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.fragment_container, incomeFragment)
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            .addToBackStack(null)
-                            .commit()
-                    }
-                    R.id.nav_signout -> {
-                            sessionManagement.removeSession()
-                            navController.navigate(R.id.loginFragment)
-                        }
+            when (item) {
+                R.id.listCategoryFragment -> {
+                    categoryFragment = ListCategoryFragment()
+                    (activity as AppCompatActivity).supportActionBar?.setTitle("Categories")
+                    requireActivity().supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, categoryFragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit()
                 }
+                R.id.dashboardFragment -> {
+                    chartFragment = ChartFragment()
+                    (activity as AppCompatActivity).supportActionBar?.setTitle("Dashboard")
+                    requireActivity().supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, chartFragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit()
+                }
+                R.id.expenseFragment -> {
+                    listExpenseFragment =
+                        ExpenseList()
+                    (activity as AppCompatActivity).supportActionBar?.setTitle("Expense List")
+                    requireActivity().supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, listExpenseFragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit()
+                }
+                R.id.incomeFragment -> {
+                    incomeFragment = IncomeFragment()
+                    (activity as AppCompatActivity).supportActionBar?.setTitle("Income")
+                    requireActivity().supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, incomeFragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit()
+                }
+                R.id.nav_signout -> {
+                    sessionManagement.removeSession()
+                    navController.navigate(R.id.loginFragment)
+                }
+            }
             true
         }
 //        var utils = Utils()
 //        utils.initializeBottomNavigationView(view,navController)
 
-     }
+    }
 
     override fun onStart() {
 
@@ -161,13 +170,13 @@ class DashboardFragment : Fragment(), NavigationView.OnNavigationItemSelectedLis
         var userEntity = sessionManagement.getSession()
         Log.d(TAG, "onStart: ${userEntity}")
 
-        if(userEntity != null) {
+        if (userEntity != null) {
             val headerView: View = topNavView.getHeaderView(0)
             val welcomeUserName: TextView = headerView.findViewById(R.id.welcomeId)
             welcomeUserName.text = userEntity.firstName + " " + userEntity.lastName
             Log.d(TAG, "onStart: ${headerView}")
         } else {
-           navController.navigate(R.id.loginFragment)
+            navController.navigate(R.id.loginFragment)
         }
     }
 

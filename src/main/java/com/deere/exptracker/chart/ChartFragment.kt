@@ -27,8 +27,6 @@ import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +34,6 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 class ChartFragment : Fragment() {
 
@@ -84,13 +81,14 @@ class ChartFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             var incomeDetails = readIncomeForCurrentMonth()
             var expenseDetails = readExpenseForCurrentMonth()
-            var remainingBudget = if(incomeDetails != null) incomeDetails.incomeAmt - expenseDetails else 0
+            var remainingBudget =
+                if (incomeDetails != null) incomeDetails.incomeAmt - expenseDetails else 0
             withContext(Dispatchers.Main) {
-                if(incomeDetails != null) {
+                if (incomeDetails != null) {
                     binding.totalIncome.setText(incomeDetails.incomeAmt.toString())
                 }
 
-                if(expenseDetails != null) {
+                if (expenseDetails != null) {
                     binding.totalExpense.setText(remainingBudget.toString())
                 }
             }
@@ -299,7 +297,7 @@ class ChartFragment : Fragment() {
         for (i in 0 until 2) {
             var exp = getExpense(userEntity.userId, sdf.format(cal.time))
             cal.add(Calendar.DAY_OF_YEAR, 1)
-            if(i == 0) {
+            if (i == 0) {
                 withContext(Dispatchers.Main) {
                     Log.d(TAG, "YESTERDAY EXPENSE: ${exp}")
                     setYesterdayExpense(exp)

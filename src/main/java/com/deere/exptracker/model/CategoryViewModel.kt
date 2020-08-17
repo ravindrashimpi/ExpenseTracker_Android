@@ -9,7 +9,7 @@ import com.deere.exptracker.entity.CategoryEntity
 import com.deere.exptracker.repository.CategoryRepository
 import kotlinx.coroutines.launch
 
-class CategoryViewModel(private val categoryRepository: CategoryRepository): ViewModel() {
+class CategoryViewModel(private val categoryRepository: CategoryRepository) : ViewModel() {
     val TAG = "CategoryViewModel"
 
     suspend fun addCategory(category: CategoryEntity): Long {
@@ -25,7 +25,7 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository): Vie
         return categories
     }
 
-    suspend fun deleteCategory(category: CategoryEntity) : Int{
+    suspend fun deleteCategory(category: CategoryEntity): Int {
         return categoryRepository.deleteCategory(category)
     }
 

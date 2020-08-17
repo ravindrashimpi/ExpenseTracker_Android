@@ -5,9 +5,9 @@ import com.deere.exptracker.entity.IncomeEntity
 
 class IncomeRepository(private val incomeDAO: IncomeDAO) {
 
-   suspend fun addIncome(income: IncomeEntity): Long {
-       return incomeDAO.addIncome(income)
-   }
+    suspend fun addIncome(income: IncomeEntity): Long {
+        return incomeDAO.addIncome(income)
+    }
 
     suspend fun checkForIncomeForCurrentMonth(pUserId: Int, pIncomeDate: String): IncomeEntity {
         return incomeDAO.checkForIncomeForCurrentMonth(pUserId, pIncomeDate)

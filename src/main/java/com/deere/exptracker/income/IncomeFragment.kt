@@ -1,14 +1,11 @@
 package com.deere.exptracker.income
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -42,7 +39,11 @@ class IncomeFragment : Fragment(), View.OnClickListener {
     lateinit var dashboardFragment: DashboardFragment
     var incomeEntity: IncomeEntity? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         Log.d(TAG, "OnCreateView")
         //Do the binding of the Fragment
         binding = FragmentIncomeBinding.inflate(inflater)
@@ -67,7 +68,7 @@ class IncomeFragment : Fragment(), View.OnClickListener {
         //display the fragment for updaing the income.
         CoroutineScope(Dispatchers.IO).launch {
             incomeEntity = checkIncomeExist()
-            if(incomeEntity != null) {
+            if (incomeEntity != null) {
                 withContext(Dispatchers.Main) {
                     binding.income.setText(incomeEntity!!.incomeAmt.toString())
                     binding.addIncome.text = "UPDATE"
@@ -87,21 +88,33 @@ class IncomeFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v!!.id) {
-            R.id.amt1 -> {binding.income.setText(binding.amt1.text)}
-            R.id.amt2 -> {binding.income.setText(binding.amt2.text)}
-            R.id.amt3 -> {binding.income.setText(binding.amt3.text)}
-            R.id.amt4 -> {binding.income.setText(binding.amt4.text)}
-            R.id.amt5 -> {binding.income.setText(binding.amt5.text)}
-            R.id.amt6 -> {binding.income.setText(binding.amt6.text)}
+        when (v!!.id) {
+            R.id.amt1 -> {
+                binding.income.setText(binding.amt1.text)
+            }
+            R.id.amt2 -> {
+                binding.income.setText(binding.amt2.text)
+            }
+            R.id.amt3 -> {
+                binding.income.setText(binding.amt3.text)
+            }
+            R.id.amt4 -> {
+                binding.income.setText(binding.amt4.text)
+            }
+            R.id.amt5 -> {
+                binding.income.setText(binding.amt5.text)
+            }
+            R.id.amt6 -> {
+                binding.income.setText(binding.amt6.text)
+            }
             R.id.addIncome -> {
-                if(validateInputs(binding)) {
-                    if(incomeEntity != null) {
+                if (validateInputs(binding)) {
+                    if (incomeEntity != null) {
                         //Update Income
                         Log.d(TAG, "UPDATE INCOME")
                         CoroutineScope(Dispatchers.IO).launch {
                             var isUpdated = updateIncome()
-                            if(isUpdated != -1) {
+                            if (isUpdated != -1) {
                                 withContext(Dispatchers.Main) {
                                     displayDialog("Message", "Income updated for this month.")
                                     binding.addIncome.isEnabled = false
@@ -145,11 +158,11 @@ class IncomeFragment : Fragment(), View.OnClickListener {
     suspend private fun addIncome(): Long {
         var sdf = SimpleDateFormat("yyyy-MM-dd")
         var incomeEntity = IncomeEntity(
-                0,
-                sdf.format(Date()),
-                binding.income.text.toString().toDouble(),
-                0.toDouble(),
-                userEntity.userId
+            0,
+            sdf.format(Date()),
+            binding.income.text.toString().toDouble(),
+            0.toDouble(),
+            userEntity.userId
         )
         return incomeViewModel.addIncome(incomeEntity)
     }
@@ -159,12 +172,15 @@ class IncomeFragment : Fragment(), View.OnClickListener {
      */
     suspend fun updateIncome(): Int {
         var sdf = SimpleDateFormat("yyyy-MM-dd")
-        return incomeViewModel.updateIncome(binding.income.text.toString().toDouble(), userEntity.userId);
+        return incomeViewModel.updateIncome(
+            binding.income.text.toString().toDouble(),
+            userEntity.userId
+        );
     }
 
     override fun onStart() {
         super.onStart()
-       //Get the Loggedin User Details
+        //Get the Loggedin User Details
 
         Log.d(TAG, "onStart: ${userEntity}")
     }
@@ -193,10 +209,11 @@ class IncomeFragment : Fragment(), View.OnClickListener {
     /**
      * Method used to check if the income already exist for the logged in user
      */
-    suspend fun checkIncomeExist() : IncomeEntity {
+    suspend fun checkIncomeExist(): IncomeEntity {
         var sdf = SimpleDateFormat("yyyy/MM")
         return incomeViewModel.checkForIncomeForCurrentMonth(userEntity.userId, sdf.format(Date()))
     }
+
     /**
      * Method used to initialize the Model for Database
      */
@@ -207,8 +224,10 @@ class IncomeFragment : Fragment(), View.OnClickListener {
         //Initialize IncomeDAO
         val incomeDao: IncomeDAO = ExpenseTrackerDB.getInstance(application).incomeDao
         val incomeRepository: IncomeRepository = IncomeRepository(incomeDao)
-        val incomeViewModelFactory: IncomeViewModelFactory = IncomeViewModelFactory(incomeRepository)
-        incomeViewModel = ViewModelProviders.of(this, incomeViewModelFactory).get(IncomeViewModel::class.java)
+        val incomeViewModelFactory: IncomeViewModelFactory =
+            IncomeViewModelFactory(incomeRepository)
+        incomeViewModel =
+            ViewModelProviders.of(this, incomeViewModelFactory).get(IncomeViewModel::class.java)
     }
 
     /**
@@ -229,7 +248,7 @@ class IncomeFragment : Fragment(), View.OnClickListener {
     private fun validateInputs(binding: FragmentIncomeBinding): Boolean {
         return when {
             binding.income.text.toString().isEmpty() -> {
-                displayDialog("Warning","Please enter income for the month.")
+                displayDialog("Warning", "Please enter income for the month.")
                 false
             }
             else -> {

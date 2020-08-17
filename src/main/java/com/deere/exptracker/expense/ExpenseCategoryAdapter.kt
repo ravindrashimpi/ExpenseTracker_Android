@@ -1,25 +1,24 @@
 package com.deere.exptracker.expense
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Build
-import android.os.health.SystemHealthManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
-import androidx.core.view.marginBottom
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.deere.exptracker.R
 import com.deere.exptracker.entity.CategoryEntity
 
-class ExpenseCategoryAdapter(catList: MutableList<CategoryEntity>, clickEvent: OnItemClickListner, caregoryId: Int) :RecyclerView.Adapter<ExpenseCategoryAdapter.ExpenseCategoryViewHolder>(){
+class ExpenseCategoryAdapter(
+    catList: MutableList<CategoryEntity>,
+    clickEvent: OnItemClickListner,
+    caregoryId: Int
+) : RecyclerView.Adapter<ExpenseCategoryAdapter.ExpenseCategoryViewHolder>() {
 
     val TAG = "ExpenseCategoryAdapter"
     var categoryList = catList
@@ -46,50 +45,51 @@ class ExpenseCategoryAdapter(catList: MutableList<CategoryEntity>, clickEvent: O
     override fun onBindViewHolder(holder: ExpenseCategoryViewHolder, position: Int) {
         val cat: CategoryEntity = categoryList[position]
         holder.categoryName.text = cat.categoryName
-        holder.img.setImageResource(when (cat.categoryImg) {
-            "ic_travel" -> R.drawable.ic_travel_lg
-            "ic_cloths" -> R.drawable.ic_cloths_lg
-            "ic_eating_out" -> R.drawable.ic_eating_out_lg
-            "ic_entertainment" -> R.drawable.ic_entertainment_lg
-            "ic_fuel" -> R.drawable.ic_fuel_lg
-            "ic_general" -> R.drawable.ic_general_lg
-            "ic_gift" -> R.drawable.ic_gift_lg
-            "ic_holiday" -> R.drawable.ic_holiday_lg
-            "ic_kids" -> R.drawable.ic_kids_lg
-            "ic_shopping" -> R.drawable.ic_shopping_lg
-            "ic_sports" -> R.drawable.ic_sports_lg
-            "ic_bills" -> R.drawable.ic_bills_lg
-            "ic_drinks" -> R.drawable.ic_drinks_lg
-            "ic_mobile" -> R.drawable.ic_mobile_lg
-            "ic_phone" -> R.drawable.ic_phone_lg
-            "ic_tea" -> R.drawable.ic_tea
-            "ic_medical" -> R.drawable.ic_medical_lg
-            "ic_wifi" -> R.drawable.ic_wifi_lg
-            "ic_television" -> R.drawable.ic_television_lg
-            else -> R.drawable.ic_no_image
-        })
+        holder.img.setImageResource(
+            when (cat.categoryImg) {
+                "ic_travel" -> R.drawable.ic_travel_lg
+                "ic_cloths" -> R.drawable.ic_cloths_lg
+                "ic_eating_out" -> R.drawable.ic_eating_out_lg
+                "ic_entertainment" -> R.drawable.ic_entertainment_lg
+                "ic_fuel" -> R.drawable.ic_fuel_lg
+                "ic_general" -> R.drawable.ic_general_lg
+                "ic_gift" -> R.drawable.ic_gift_lg
+                "ic_holiday" -> R.drawable.ic_holiday_lg
+                "ic_kids" -> R.drawable.ic_kids_lg
+                "ic_shopping" -> R.drawable.ic_shopping_lg
+                "ic_sports" -> R.drawable.ic_sports_lg
+                "ic_bills" -> R.drawable.ic_bills_lg
+                "ic_drinks" -> R.drawable.ic_drinks_lg
+                "ic_mobile" -> R.drawable.ic_mobile_lg
+                "ic_phone" -> R.drawable.ic_phone_lg
+                "ic_tea" -> R.drawable.ic_tea
+                "ic_medical" -> R.drawable.ic_medical_lg
+                "ic_wifi" -> R.drawable.ic_wifi_lg
+                "ic_television" -> R.drawable.ic_television_lg
+                else -> R.drawable.ic_no_image
+            }
+        )
 
         Log.d(TAG, "CategoryIDToBeUpdated: ${selectedCatId} : ${cat.caregoryId}")
 
 
-
         //Used to set the alignment of the categories
-        if(prevPosition == position) {
+        if (prevPosition == position) {
             var layoutParam = holder.cardView.layoutParams as ViewGroup.MarginLayoutParams
-            layoutParam.setMargins(15,114, 15, 15)
+            layoutParam.setMargins(15, 114, 15, 15)
             holder.cardView.requestLayout()
             setBackgroundToCardView(holder)
         } else {
             var layoutParam = holder.cardView.layoutParams as ViewGroup.MarginLayoutParams
-            layoutParam.setMargins(15,85, 15, 15)
+            layoutParam.setMargins(15, 85, 15, 15)
             holder.cardView.requestLayout()
             setBackgroundToCardView(holder)
         }
 
         //Make the categorySelected
-        if(selectedCatId == cat.caregoryId) {
+        if (selectedCatId == cat.caregoryId) {
             var layoutParam = holder.cardView.layoutParams as ViewGroup.MarginLayoutParams
-            layoutParam.setMargins(15,114, 15, 15)
+            layoutParam.setMargins(15, 114, 15, 15)
             holder.cardView.requestLayout()
             setBackgroundToCardView(holder)
         }
@@ -119,7 +119,7 @@ class ExpenseCategoryAdapter(catList: MutableList<CategoryEntity>, clickEvent: O
      */
     private fun setBackgroundToCardView(holder: ExpenseCategoryViewHolder) {
         //Set the background of image
-        if(count > 6) {
+        if (count > 6) {
             count = 0
             holder.cardViewGradient.setBackgroundResource(getRectangleGradient(count))
             holder.img.setBackgroundResource(getCircleGradient(count))
@@ -135,7 +135,7 @@ class ExpenseCategoryAdapter(catList: MutableList<CategoryEntity>, clickEvent: O
      * Method used to get the gradient atlease once
      */
     private fun getRectangleGradient(count: Int): Int {
-        return when(count) {
+        return when (count) {
             0 -> R.drawable.custom_rectangle_gradient_1
             1 -> R.drawable.custom_rectangle_gradient_2
             2 -> R.drawable.custom_rectangle_gradient_3
@@ -151,7 +151,7 @@ class ExpenseCategoryAdapter(catList: MutableList<CategoryEntity>, clickEvent: O
      * Method used to get the gradient atlease once
      */
     private fun getCircleGradient(count: Int): Int {
-        return when(count) {
+        return when (count) {
             0 -> R.drawable.custom_circle_gradient_1
             1 -> R.drawable.custom_circle_gradient_2
             2 -> R.drawable.custom_circle_gradient_3

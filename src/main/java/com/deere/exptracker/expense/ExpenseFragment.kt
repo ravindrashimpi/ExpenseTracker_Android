@@ -1,6 +1,5 @@
 package com.deere.exptracker.expense
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
@@ -30,11 +29,9 @@ import com.deere.exptracker.repository.ExpenseRepository
 import com.deere.exptracker.repository.IncomeRepository
 import com.deere.exptracker.util.ExpenseTrackerDB
 import com.deere.exptracker.util.SessionManagement
-import com.github.mikephil.charting.utils.Utils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -42,7 +39,8 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter.OnItemClickListner {
+class ExpenseFragment : Fragment(), View.OnClickListener,
+    ExpenseCategoryAdapter.OnItemClickListner {
 
     var TAG = "ExpenseFragment"
     lateinit var binding: FragmentExpenseBinding
@@ -58,7 +56,11 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
     lateinit var sessionManagement: SessionManagement
     lateinit var userEntity: UserEntity
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         //Do the binding of the Fragment
         binding = FragmentExpenseBinding.inflate(inflater)
 
@@ -70,8 +72,11 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
         //Get data of Expense for update
         var bundleObj = arguments
         var gson = Gson()
-        if(bundleObj != null) {
-            updateExpCatEntity = gson.fromJson<ExpenseCategoryEntity>((bundleObj.get("UPDATE_EXPENSE") as String), ExpenseCategoryEntity::class.java)
+        if (bundleObj != null) {
+            updateExpCatEntity = gson.fromJson<ExpenseCategoryEntity>(
+                (bundleObj.get("UPDATE_EXPENSE") as String),
+                ExpenseCategoryEntity::class.java
+            )
             isExpenseUpdate = bundleObj.getBoolean("IS_EXPENSE_UPDAT")
             setInputControls(updateExpCatEntity!!)
 
@@ -81,10 +86,15 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
 
         //initialize Model and DB
         initializeModel()
-        categoryViewModel.listAllCategories(userEntity.userId).observe(viewLifecycleOwner, androidx.lifecycle.Observer { categoryList ->
-            adapter = ExpenseCategoryAdapter(categoryList, this, (if(updateExpCatEntity != null) updateExpCatEntity!!.catId else 0))
-            binding.expCategoryRecyclerView.adapter = adapter
-        })
+        categoryViewModel.listAllCategories(userEntity.userId)
+            .observe(viewLifecycleOwner, androidx.lifecycle.Observer { categoryList ->
+                adapter = ExpenseCategoryAdapter(
+                    categoryList,
+                    this,
+                    (if (updateExpCatEntity != null) updateExpCatEntity!!.catId else 0)
+                )
+                binding.expCategoryRecyclerView.adapter = adapter
+            })
 
 
         return binding.root
@@ -97,7 +107,7 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
         navController = Navigation.findNavController(view)
 
         //Add default date to Expense Date field
-        if(!isExpenseUpdate) {
+        if (!isExpenseUpdate) {
             binding.expDate.setText(formatDate())
         }
 
@@ -116,9 +126,9 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
     }
 
     override fun onClick(v: View) {
-        when(v.id) {
+        when (v.id) {
             R.id.expenseAddBtn -> {
-                if(isExpenseUpdate) {
+                if (isExpenseUpdate) {
                     //Update the Expense
                     CoroutineScope(IO).launch {
                         updateExpense()
@@ -154,14 +164,21 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
                 val month = cal.get(Calendar.MONTH)
                 val day = cal.get(Calendar.DAY_OF_MONTH)
 
-                val datePicker = DatePickerDialog(requireContext(), R.style.my_dialog_theme, DatePickerDialog.OnDateSetListener{ v, mYear, mMonth, mDay ->
-                    val selectedDate = Calendar.getInstance()
-                    selectedDate.set(Calendar.YEAR, mYear)
-                    selectedDate.set(Calendar.MONTH, mMonth)
-                    selectedDate.set(Calendar.DAY_OF_MONTH, mDay)
-                    val date = dateFormat.format(selectedDate.time)
-                    binding.expDate.setText(date)
-                }, year, month, day)
+                val datePicker = DatePickerDialog(
+                    requireContext(),
+                    R.style.my_dialog_theme,
+                    DatePickerDialog.OnDateSetListener { v, mYear, mMonth, mDay ->
+                        val selectedDate = Calendar.getInstance()
+                        selectedDate.set(Calendar.YEAR, mYear)
+                        selectedDate.set(Calendar.MONTH, mMonth)
+                        selectedDate.set(Calendar.DAY_OF_MONTH, mDay)
+                        val date = dateFormat.format(selectedDate.time)
+                        binding.expDate.setText(date)
+                    },
+                    year,
+                    month,
+                    day
+                )
                 datePicker.show()
             }
 //            R.id.expCategory -> {
@@ -186,20 +203,26 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
         //Initialize CategoryDAO
         val categoryDao: CategoryDAO = ExpenseTrackerDB.getInstance(application).categoryDao
         val categoryRepository: CategoryRepository = CategoryRepository(categoryDao)
-        val categoryViewModelFactory: CategoryViewModelFactory = CategoryViewModelFactory(categoryRepository)
-        categoryViewModel = ViewModelProviders.of(this, categoryViewModelFactory).get(CategoryViewModel::class.java)
+        val categoryViewModelFactory: CategoryViewModelFactory =
+            CategoryViewModelFactory(categoryRepository)
+        categoryViewModel =
+            ViewModelProviders.of(this, categoryViewModelFactory).get(CategoryViewModel::class.java)
 
         //Initialize ExpenseDAO
         val expenseDao: ExpenseDAO = ExpenseTrackerDB.getInstance(application).expenseDao
         val expenseRepository: ExpenseRepository = ExpenseRepository(expenseDao)
-        val expenseViewModelFactory: ExpenseViewModelFactory = ExpenseViewModelFactory(expenseRepository)
-        expenseViewModel = ViewModelProviders.of(this, expenseViewModelFactory).get(ExpenseViewModel::class.java)
+        val expenseViewModelFactory: ExpenseViewModelFactory =
+            ExpenseViewModelFactory(expenseRepository)
+        expenseViewModel =
+            ViewModelProviders.of(this, expenseViewModelFactory).get(ExpenseViewModel::class.java)
 
         //Initialize IncomeDAO
         val incomeDao: IncomeDAO = ExpenseTrackerDB.getInstance(application).incomeDao
         val incomeRepository: IncomeRepository = IncomeRepository(incomeDao)
-        val incomeViewModelFactory: IncomeViewModelFactory = IncomeViewModelFactory(incomeRepository)
-        incomeViewModel = ViewModelProviders.of(this, incomeViewModelFactory).get(IncomeViewModel::class.java)
+        val incomeViewModelFactory: IncomeViewModelFactory =
+            IncomeViewModelFactory(incomeRepository)
+        incomeViewModel =
+            ViewModelProviders.of(this, incomeViewModelFactory).get(IncomeViewModel::class.java)
     }
 
     override fun onClick(category: CategoryEntity) {
@@ -213,22 +236,22 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
     private fun validateInputs(binding: FragmentExpenseBinding): Boolean {
         return when {
             binding.expDate.text.toString().isEmpty() -> {
-                displayDialog("Warning","Please select date.")
+                displayDialog("Warning", "Please select date.")
                 //Toast.makeText(context, "Please select date.", Toast.LENGTH_SHORT).show();
                 false
             }
             binding.expAmount.text.toString().isEmpty() -> {
-                displayDialog("Warning","Please enter valid amount.")
+                displayDialog("Warning", "Please enter valid amount.")
                 //Toast.makeText(context, "Please enter valid amount.", Toast.LENGTH_SHORT).show();
                 false
             }
             binding.expNote.text.toString().isEmpty() -> {
-                displayDialog("Warning","Please enter note.")
+                displayDialog("Warning", "Please enter note.")
                 //Toast.makeText(context, "Please enter note.", Toast.LENGTH_SHORT).show();
                 false
             }
             selectedCategory == null -> {
-                displayDialog("Warning","Select Category from top.")
+                displayDialog("Warning", "Select Category from top.")
                 //Toast.makeText(context, "Select Category from top.", Toast.LENGTH_SHORT).show();
                 false
             }
@@ -245,7 +268,7 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
         MaterialAlertDialogBuilder(context)
             .setTitle(title)
             .setMessage(message)
-            .setPositiveButton(resources.getString(R.string.dialogOk)) { dialog, id ->}
+            .setPositiveButton(resources.getString(R.string.dialogOk)) { dialog, id -> }
             .show()
     }
 
@@ -258,7 +281,12 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
         binding.expNote.setText(expenseCategoryEntity.expNote.toString())
 
         //Update the selectedCategory in case user don't want to update the existing category
-        var tempCategory = CategoryEntity(expenseCategoryEntity.catId, expenseCategoryEntity.catName, expenseCategoryEntity.catImage, userEntity.userId)
+        var tempCategory = CategoryEntity(
+            expenseCategoryEntity.catId,
+            expenseCategoryEntity.catName,
+            expenseCategoryEntity.catImage,
+            userEntity.userId
+        )
         selectedCategory = tempCategory
     }
 
@@ -294,7 +322,7 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
      * Method used to Add Expense
      */
     private fun addExpense() {
-        if(validateInputs(binding)) {
+        if (validateInputs(binding)) {
             var sdf = SimpleDateFormat("dd/MM/yyyy")
             var date = sdf.parse(binding.expDate.text.toString())
             var sdf1 = SimpleDateFormat("yyyy-MM-dd")
@@ -309,23 +337,23 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
             Log.d(TAG, "ExpenseObj: ${activity}")
             expenseViewModel.addExpense(expenseEntity)
                 .observe(viewLifecycleOwner, Observer {
-                if (it != 0L) {
-                    Toast.makeText(
-                        context,
-                        "Expenses Added in database ${it}.",
-                        Toast.LENGTH_SHORT
-                    ).show();
-                    listExpenseFragment =
-                        ExpenseList()
-                    (activity as AppCompatActivity).supportActionBar?.setTitle("Expense List")
-                    requireActivity().supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, listExpenseFragment)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack(null)
-                        .commit()
-                }
-            })
+                    if (it != 0L) {
+                        Toast.makeText(
+                            context,
+                            "Expenses Added in database ${it}.",
+                            Toast.LENGTH_SHORT
+                        ).show();
+                        listExpenseFragment =
+                            ExpenseList()
+                        (activity as AppCompatActivity).supportActionBar?.setTitle("Expense List")
+                        requireActivity().supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, listExpenseFragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                })
 
         }
     }
@@ -337,9 +365,11 @@ class ExpenseFragment : Fragment(), View.OnClickListener, ExpenseCategoryAdapter
         var sdf = SimpleDateFormat("dd/MM/yyyy")
         var date = sdf.parse(binding.expDate.text.toString())
         var sdf1 = SimpleDateFormat("yyyy/MM")
-        var update = incomeViewModel.updateExpenseInIncome(userEntity.userId, binding.expAmount.text.toString().toDouble(), sdf1.format(
-            date
-        ))
+        var update = incomeViewModel.updateExpenseInIncome(
+            userEntity.userId, binding.expAmount.text.toString().toDouble(), sdf1.format(
+                date
+            )
+        )
         Log.d(TAG, "Update Income table: ${update}")
     }
 

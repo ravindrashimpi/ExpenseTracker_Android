@@ -12,8 +12,8 @@ class Utils {
         //Initialize BottomNavigationView
         var bottomNavigationView: BottomNavigationView? = null
         bottomNavigationView = view.findViewById(R.id.bottomNavigationView)
-        bottomNavigationView!!.setOnNavigationItemSelectedListener{ item ->
-            when(item.itemId) {
+        bottomNavigationView!!.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
 //                R.id.expenseFragment -> navController.navigate(R.id.action_dashboardFragment_to_expenseFragment)
 //                R.id.dashboardFragment -> navController.navigate(R.id.dashboardFragment)
 //                R.id.categoryFragment -> navController.navigate(R.id.action_dashboardFragment_to_categoryFragment)

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.deere.exptracker.entity.IncomeEntity
 import com.deere.exptracker.repository.IncomeRepository
 
-class IncomeViewModel(private val incomeRepository: IncomeRepository): ViewModel() {
+class IncomeViewModel(private val incomeRepository: IncomeRepository) : ViewModel() {
 
     suspend fun addIncome(income: IncomeEntity): Long {
         return incomeRepository.addIncome(income)

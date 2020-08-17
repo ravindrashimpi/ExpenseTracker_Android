@@ -9,7 +9,7 @@ class UserViewModelFactory(private val userRepository: UserRepository) : ViewMod
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(UserViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
             return UserViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown View Model class")

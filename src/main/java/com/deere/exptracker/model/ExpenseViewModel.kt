@@ -1,6 +1,5 @@
 package com.deere.exptracker.model
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +7,7 @@ import com.deere.exptracker.entity.ExpenseEntity
 import com.deere.exptracker.repository.ExpenseRepository
 import kotlinx.coroutines.launch
 
-class ExpenseViewModel(private val expeneRepository: ExpenseRepository): ViewModel() {
+class ExpenseViewModel(private val expeneRepository: ExpenseRepository) : ViewModel() {
     val TAG = "ExpenseViewModel"
 
     fun addExpense(expense: ExpenseEntity): MutableLiveData<Long> {

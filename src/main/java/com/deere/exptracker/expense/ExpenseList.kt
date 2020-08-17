@@ -17,10 +17,8 @@ import com.deere.exptracker.DAO.CategoryDAO
 import com.deere.exptracker.DAO.ExpenseDAO
 import com.deere.exptracker.DAO.IncomeDAO
 import com.deere.exptracker.R
-
 import com.deere.exptracker.databinding.FragmentExpenseListBinding
 import com.deere.exptracker.entity.ExpenseCategoryEntity
-import com.deere.exptracker.entity.ExpenseEntity
 import com.deere.exptracker.entity.IncomeEntity
 import com.deere.exptracker.entity.UserEntity
 import com.deere.exptracker.model.*
@@ -36,7 +34,6 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 import java.lang.StringBuilder
@@ -57,7 +54,11 @@ class ExpenseList : Fragment(), View.OnClickListener, ExpenseListAdapter.OnItemS
     lateinit var incomeViewModel: IncomeViewModel
     lateinit var adapter: ExpenseListAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Get a reference to the binding object and inflate the fragment views.
         binding = FragmentExpenseListBinding.inflate(inflater, container, false)
 
@@ -83,26 +84,35 @@ class ExpenseList : Fragment(), View.OnClickListener, ExpenseListAdapter.OnItemS
         return binding.root
     }
 
-    var itemTouchHelperCallBack: ItemTouchHelper.SimpleCallback = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            TODO("Not yet implemented")
-        }
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            Log.d(TAG, "AdapterPosition: ${(binding.expenseRecyclerView.adapter as ExpenseListAdapter).getExpenseCategoryEntity(viewHolder.adapterPosition)}")
-            var expenseCategoryObj = (binding.expenseRecyclerView.adapter as ExpenseListAdapter).getExpenseCategoryEntity(viewHolder.adapterPosition)
-            CoroutineScope(IO).launch {
-                deleteExpense(expenseCategoryObj.expenseId)
-                setExpenseListWithView(resources)
+    var itemTouchHelperCallBack: ItemTouchHelper.SimpleCallback =
+        object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                TODO("Not yet implemented")
             }
-            //binding.expenseRecyclerView.adapter!!.notifyDataSetChanged()
 
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                Log.d(
+                    TAG,
+                    "AdapterPosition: ${(binding.expenseRecyclerView.adapter as ExpenseListAdapter).getExpenseCategoryEntity(
+                        viewHolder.adapterPosition
+                    )}"
+                )
+                var expenseCategoryObj =
+                    (binding.expenseRecyclerView.adapter as ExpenseListAdapter).getExpenseCategoryEntity(
+                        viewHolder.adapterPosition
+                    )
+                CoroutineScope(IO).launch {
+                    deleteExpense(expenseCategoryObj.expenseId)
+                    setExpenseListWithView(resources)
+                }
+                //binding.expenseRecyclerView.adapter!!.notifyDataSetChanged()
+
+            }
         }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -115,20 +125,28 @@ class ExpenseList : Fragment(), View.OnClickListener, ExpenseListAdapter.OnItemS
         //display the fragment for updaing the income.
         CoroutineScope(Dispatchers.IO).launch {
             incomeEntity = checkIncomeExist()
-            if(incomeEntity == null) {
+            if (incomeEntity == null) {
                 withContext(Main) {
                     var sdf = SimpleDateFormat("MMMM YYYY")
                     binding.infoCardView.visibility = View.VISIBLE
                     binding.addExpense.isEnabled = false
-                    binding.infoDetailMsg.setText("Please add the income before creating new Expense for ${sdf.format(Date())}")
+                    binding.infoDetailMsg.setText(
+                        "Please add the income before creating new Expense for ${sdf.format(
+                            Date()
+                        )}"
+                    )
                     binding.addExpense.setBackgroundResource(R.drawable.custom_circle_add_disable_btn)
                 }
-            } else if(isCategoryExist() == 0){
+            } else if (isCategoryExist() == 0) {
                 withContext(Main) {
                     var sdf = SimpleDateFormat("MMMM YYYY")
                     binding.infoCardView.visibility = View.VISIBLE
                     binding.addExpense.isEnabled = false
-                    binding.infoDetailMsg.setText("Please add the Category before creating new Expense for ${sdf.format(Date())}")
+                    binding.infoDetailMsg.setText(
+                        "Please add the Category before creating new Expense for ${sdf.format(
+                            Date()
+                        )}"
+                    )
                     binding.addExpense.setBackgroundResource(R.drawable.custom_circle_add_disable_btn)
                 }
             }
@@ -139,7 +157,7 @@ class ExpenseList : Fragment(), View.OnClickListener, ExpenseListAdapter.OnItemS
 
     override fun onClick(v: View?) {
         Log.d(TAG, "onClick ${v!!.id}")
-        when(v!!.id) {
+        when (v!!.id) {
             R.id.addExpense -> {
                 expenseFragment = ExpenseFragment()
                 (activity as AppCompatActivity).supportActionBar?.setTitle("Expense")
@@ -173,21 +191,22 @@ class ExpenseList : Fragment(), View.OnClickListener, ExpenseListAdapter.OnItemS
      */
     private suspend fun getAllExpenses(): ArrayList<ExpenseCategoryEntity> {
         var sdf = SimpleDateFormat("YYYY/MM")
-        var expenseList =  expenseViewModel.listAllExpense(userEntity.userId, sdf.format(Date()))
+        var expenseList = expenseViewModel.listAllExpense(userEntity.userId, sdf.format(Date()))
 
         var expCatList = ArrayList<ExpenseCategoryEntity>()
-        for(expenseEntity in expenseList) {
-            var category = categoryViewModel.getCategoryById(expenseEntity.categoryId, userEntity.userId)
+        for (expenseEntity in expenseList) {
+            var category =
+                categoryViewModel.getCategoryById(expenseEntity.categoryId, userEntity.userId)
             var expCatEntity = ExpenseCategoryEntity(
-                                             expenseEntity.expenseId,
-                                    category.categoryImg,
-                                    category.categoryName,
-                                    expenseEntity.categoryId,
-                                    expenseEntity.expenseAmt,
-                                    expenseEntity.expenseDate,
-                                    expenseEntity.expenseNote,
-                                    userEntity.userId
-                                )
+                expenseEntity.expenseId,
+                category.categoryImg,
+                category.categoryName,
+                expenseEntity.categoryId,
+                expenseEntity.expenseAmt,
+                expenseEntity.expenseDate,
+                expenseEntity.expenseNote,
+                userEntity.userId
+            )
             expCatList.add(expCatEntity)
         }
         return expCatList
@@ -211,20 +230,26 @@ class ExpenseList : Fragment(), View.OnClickListener, ExpenseListAdapter.OnItemS
         //Create ExpenseDAO
         val expenseDao: ExpenseDAO = ExpenseTrackerDB.getInstance(application).expenseDao
         val expenseRepository: ExpenseRepository = ExpenseRepository(expenseDao)
-        val expenseViewModelFactory: ExpenseViewModelFactory = ExpenseViewModelFactory(expenseRepository)
-        expenseViewModel = ViewModelProviders.of(this, expenseViewModelFactory).get(ExpenseViewModel::class.java)
+        val expenseViewModelFactory: ExpenseViewModelFactory =
+            ExpenseViewModelFactory(expenseRepository)
+        expenseViewModel =
+            ViewModelProviders.of(this, expenseViewModelFactory).get(ExpenseViewModel::class.java)
 
         //Create CategoryDAO
         val categoryDao: CategoryDAO = ExpenseTrackerDB.getInstance(application).categoryDao
         val categoryRepository: CategoryRepository = CategoryRepository(categoryDao)
-        val categoryViewModelFactory: CategoryViewModelFactory = CategoryViewModelFactory(categoryRepository)
-        categoryViewModel = ViewModelProviders.of(this, categoryViewModelFactory).get(CategoryViewModel::class.java)
+        val categoryViewModelFactory: CategoryViewModelFactory =
+            CategoryViewModelFactory(categoryRepository)
+        categoryViewModel =
+            ViewModelProviders.of(this, categoryViewModelFactory).get(CategoryViewModel::class.java)
 
         //Create IncomeDAO
         val incomeDao: IncomeDAO = ExpenseTrackerDB.getInstance(application).incomeDao
         val incomeRepository: IncomeRepository = IncomeRepository(incomeDao)
-        val incomeViewModelFactory: IncomeViewModelFactory = IncomeViewModelFactory(incomeRepository)
-        incomeViewModel = ViewModelProviders.of(this, incomeViewModelFactory).get(IncomeViewModel::class.java)
+        val incomeViewModelFactory: IncomeViewModelFactory =
+            IncomeViewModelFactory(incomeRepository)
+        incomeViewModel =
+            ViewModelProviders.of(this, incomeViewModelFactory).get(IncomeViewModel::class.java)
     }
 
     override fun deleteItemOnSwipe(expenseCategoryEntity: ExpenseCategoryEntity) {
@@ -235,14 +260,16 @@ class ExpenseList : Fragment(), View.OnClickListener, ExpenseListAdapter.OnItemS
     /**
      * Method used to redirect to the ExpenseFragment for update the Expense
      */
-    private fun callUpdateExpenseFragment(updateFlag: Boolean, expenseCategoryEntity: ExpenseCategoryEntity) {
+    private fun callUpdateExpenseFragment(
+        updateFlag: Boolean,
+        expenseCategoryEntity: ExpenseCategoryEntity
+    ) {
         var title: String = "";
         var btnLabel: String = "";
-        if(updateFlag) {
+        if (updateFlag) {
             title = "Update Expense"
             btnLabel = "UPDATE"
-        }
-        else {
+        } else {
             title = "Expense"
             btnLabel = "ADD"
         }
@@ -259,21 +286,24 @@ class ExpenseList : Fragment(), View.OnClickListener, ExpenseListAdapter.OnItemS
         requireActivity().supportFragmentManager
             .beginTransaction()
             //.replace(R.id.fragment_container, expenseFragment, bundle)
-            .replace(R.id.fragment_container,expenseFragment)
+            .replace(R.id.fragment_container, expenseFragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .addToBackStack(null)
 
             .commit()
     }
 
-    override fun getUpdateExpenseFragmentView(updateFlag: Boolean, expenseCategoryEntity: ExpenseCategoryEntity) {
+    override fun getUpdateExpenseFragmentView(
+        updateFlag: Boolean,
+        expenseCategoryEntity: ExpenseCategoryEntity
+    ) {
         callUpdateExpenseFragment(updateFlag, expenseCategoryEntity)
     }
 
     /**
      * Method used to check if the income already exist for the logged in user
      */
-    suspend fun checkIncomeExist() : IncomeEntity {
+    suspend fun checkIncomeExist(): IncomeEntity {
         var sdf = SimpleDateFormat("yyyy/MM")
         return incomeViewModel.checkForIncomeForCurrentMonth(userEntity.userId, sdf.format(Date()))
     }
@@ -299,7 +329,7 @@ class ExpenseList : Fragment(), View.OnClickListener, ExpenseListAdapter.OnItemS
 
         var item = menu.findItem(R.id.action_search)
         var searchView = item.actionView as SearchView
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -322,11 +352,11 @@ class ExpenseList : Fragment(), View.OnClickListener, ExpenseListAdapter.OnItemS
     private fun exportData() {
         var data = StringBuilder()
         data.append("Time, Distance")
-        for(i in 0 until 10) {
-            var d = i.toString() + "," + (i*i) + "\n";
+        for (i in 0 until 10) {
+            var d = i.toString() + "," + (i * i) + "\n";
             data.append(d)
         }
-        Log.d(TAG, "DATA: ${data}" )
+        Log.d(TAG, "DATA: ${data}")
 
         var fileWriter: FileWriter? = null
         try {
@@ -338,7 +368,7 @@ class ExpenseList : Fragment(), View.OnClickListener, ExpenseListAdapter.OnItemS
             //Exporting the file
             var context = context
 
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             Log.d(TAG, "EXCEPTION: ${e.message}")
         } finally {
             try {

@@ -1,7 +1,5 @@
 package com.deere.exptracker.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.deere.exptracker.DAO.CategoryDAO
 import com.deere.exptracker.entity.CategoryEntity
 

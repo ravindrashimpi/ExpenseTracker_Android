@@ -5,7 +5,7 @@ import com.deere.exptracker.entity.UserEntity
 
 class FakeUserViewModel(private val fakeUserRepository: FakeUserRepository) : ViewModel() {
 
-    fun validateUser(emailId: String, password: String) : Boolean{
+    fun validateUser(emailId: String, password: String): Boolean {
         return fakeUserRepository.validateUser(emailId, password)
     }
 

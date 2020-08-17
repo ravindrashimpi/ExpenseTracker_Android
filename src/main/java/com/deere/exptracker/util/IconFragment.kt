@@ -10,14 +10,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import com.deere.exptracker.R
 import com.deere.exptracker.category.NewCategoryFragment
-
 import com.deere.exptracker.databinding.FragmentIconBinding
-import kotlinx.android.synthetic.main.fragment_icon.*
-import java.lang.ClassCastException
 
 class IconFragment : DialogFragment(), View.OnClickListener {
     val TAG = "IconFragment"
@@ -28,7 +24,11 @@ class IconFragment : DialogFragment(), View.OnClickListener {
     lateinit var intent: Intent
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentIconBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -59,7 +59,7 @@ class IconFragment : DialogFragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v!!.id) {
+        when (v!!.id) {
             R.id.travel -> setImageSrc(R.drawable.ic_travel, "ic_travel")
             R.id.cloths -> setImageSrc(R.drawable.ic_cloths, "ic_cloths")
             R.id.eating_out -> setImageSrc(R.drawable.ic_eating_out, "ic_eating_out")
@@ -83,7 +83,7 @@ class IconFragment : DialogFragment(), View.OnClickListener {
     }
 
     private fun setImageSrc(imgSrc: Int, imgName: String) {
-        if(targetFragment == null) return
+        if (targetFragment == null) return
         newCategoryFragment = NewCategoryFragment()
         intent = newCategoryFragment.newIntent(imgSrc, imgName)
         targetFragment!!.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)

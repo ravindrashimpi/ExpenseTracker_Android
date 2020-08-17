@@ -18,10 +18,10 @@ class FakeUserDAO {
         registeredUsers.value = registerUsersList
     }
 
-    fun validateUser(emailId: String, password: String) : Boolean {
+    fun validateUser(emailId: String, password: String): Boolean {
         var flag: Boolean = false
-        for(user in registerUsersList) {
-            if(user.emailId == emailId && user.password == password)
+        for (user in registerUsersList) {
+            if (user.emailId == emailId && user.password == password)
                 flag = true
         }
         return flag
