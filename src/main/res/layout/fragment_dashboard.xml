@@ -16,9 +16,26 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolBar"
-            layout="@layout/toolbar" />
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/myToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/bottom_toolbar_click_bg_color"
+                android:elevation="4dp"
+                app:titleTextColor="@color/label"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+<!--        <include-->
+<!--            android:id="@+id/myToolbar"-->
+<!--            layout="@layout/toolbar" />-->
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -27,17 +44,32 @@
             app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolBar" />
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
+            android:layout_height="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_menu" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/bottom_navigation_style"
+            app:cnb_unselectedColor="@color/label"
+            android:elevation="16dp"
+            android:padding="8dp"
+            app:cnb_menuResource="@menu/bottom_menu">
+
+        </com.ismaeldivita.chipnavigation.ChipNavigationBar>
+
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:id="@+id/bottomNavigationView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="1dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:menu="@menu/bottom_menu" />-->
 
    </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -46,7 +78,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/colorPrimary"
+        app:itemTextColor="#000000"
+        app:itemIconTint="@color/btnColor"
+        android:background="@drawable/drawable_menu__bottom_style"
         app:headerLayout="@layout/header"
         app:menu="@menu/topmenu" />
 

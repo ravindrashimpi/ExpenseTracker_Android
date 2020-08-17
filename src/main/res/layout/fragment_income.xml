@@ -1,14 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".income.IncomeFragment">
+    android:fitsSystemWindows="true">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/listCategoryFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context=".category.ListCategoryFragment">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/expense_bg" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/userImg"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/sublabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_person"
+                android:layout_gravity="center"/>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Upload Image"
+            android:textColor="@color/sublabel"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userImg" />
+
+        <TextView
+            android:id="@+id/incomeLBL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter/Select Income"
+            android:textColor="@color/sublabel"
+            android:textSize="14sp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <EditText
+            android:id="@+id/income"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:background="@color/label"
+            android:layout_margin="15dp"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/incomeLBL"/>
+
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/gridLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:scrollbars="horizontal"
+            app:columnCount="3"
+            app:layout_constraintEnd_toEndOf="@+id/imageView2"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/income"
+            app:useDefaultMargins="true">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="77dp"
+                android:layout_height="30dp">
+                <TextView
+                    android:id="@+id/amt1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:gravity="center_vertical"
+                    android:text="10000"
+                    android:textAlignment="center"
+                    android:textColor="@color/sublabel"
+                    android:textSize="12dp"
+                    tools:ignore="RtlCompat" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="77dp"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:id="@+id/amt2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:gravity="center_vertical"
+                    android:text="30000"
+                    android:textAlignment="center"
+                    android:textColor="@color/sublabel"
+                    android:textSize="12dp"
+                    tools:ignore="RtlCompat" />/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="77dp"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:id="@+id/amt3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:gravity="center_vertical"
+                    android:text="50000"
+                    android:textAlignment="center"
+                    android:textColor="@color/sublabel"
+                    android:textSize="12dp"
+                    tools:ignore="RtlCompat" />/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="77dp"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:id="@+id/amt4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:gravity="center_vertical"
+                    android:text="80000"
+                    android:textAlignment="center"
+                    android:textColor="@color/sublabel"
+                    android:textSize="12dp"
+                    tools:ignore="RtlCompat" />/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="77dp"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:id="@+id/amt5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:gravity="center_vertical"
+                    android:text="100000"
+                    android:textAlignment="center"
+                    android:textColor="@color/sublabel"
+                    android:textSize="12dp"
+                    tools:ignore="RtlCompat" />/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="77dp"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:id="@+id/amt6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:gravity="center_vertical"
+                    android:text="130000"
+                    android:textAlignment="center"
+                    android:textColor="@color/sublabel"
+                    android:textSize="12dp"
+                    tools:ignore="RtlCompat" />/>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.gridlayout.widget.GridLayout>
+
+        <ImageView
+            android:id="@+id/cancelBTN"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/custom_circle_add_btn"
+            android:src="@drawable/ic_cancel"
+            android:tint="@color/label"
+            android:layout_marginTop="76dp"
+            android:layout_marginLeft="74dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+
+        <Button
+            android:id="@+id/addIncome"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_btn"
+            android:text="ADD"
+            android:textColor="@color/label"
+            android:textStyle="bold"
+            android:layout_marginTop="65dp"
+            android:layout_marginRight="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

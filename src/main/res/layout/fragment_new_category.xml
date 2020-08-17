@@ -1,107 +1,269 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".util.IconFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/newCategoryFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#425c59"
-        tools:context=".category.NewCategoryFragment">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="360dp"
+        android:layout_height="580dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/category_bg" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/categoryDetailCV"
+        <TextView
+            android:id="@+id/screenLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:cardBackgroundColor="@color/navigationBarColor">
+            android:layout_margin="15dp"
+            android:gravity="center_horizontal"
+            android:text="Add New Category"
+            android:textColor="@color/label"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="500dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/categoryDetailslbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="15dp"
-                    android:paddingLeft="15dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Category Details"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="380dp"
-            android:layout_height="200dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:cardCornerRadius="10dp"
-            app:cardBackgroundColor="@color/cardViewBG">
-
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="55dp"
+                android:layout_marginBottom="5dp"
+                android:text="Category Name"
+                android:textColor="@color/sublabel"
+                android:textSize="14sp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/categoryNameInputLayout"
+            <EditText
+                android:id="@id/categoryName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:background="@color/label"
+                android:padding="5dp"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Select Icon"
+                android:textColor="@color/sublabel"
+                android:textSize="14sp" />
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="259dp">
+
+                <androidx.gridlayout.widget.GridLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scrollbars="horizontal"
+                    app:columnCount="5"
+                    app:useDefaultMargins="true">
+
+                    <ImageView
+                        android:id="@+id/travel"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_travel"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/cloths"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_cloths"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/eating_out"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_eating_out"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/entertainment"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_entertainment"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/fuel"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_fuel"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/general"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_general"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/gift"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_gift"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/holiday"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_holiday"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/kids"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_kids"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/shopping"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_shopping"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/sports"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_sports"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/bills"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_bills"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/drinks"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_drinks"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/medical"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_medical"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/mobile"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_mobile"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/phone"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_phone"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/tea"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_tea"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/television"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_television"
+                        android:tint="@color/sublabel" />
+
+                    <ImageView
+                        android:id="@+id/wifi"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_wifi"
+                        android:tint="@color/sublabel" />
+                </androidx.gridlayout.widget.GridLayout>
+            </ScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/cancelBTN"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@id/categoryName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Category Name"
-                        android:drawablePadding="8dp"
-                        android:drawableLeft="@drawable/custom_category_icon"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/categoryIconInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/categoryIcon"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/custom_broken_icon"
-                        android:drawableRight="@drawable/custom_right_arrow_icon"
-                        android:drawablePadding="8dp"
-                        android:hint="Icon"
-                        android:clickable="true"
-                        android:focusable="false"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/custom_circle_add_btn"
+                    android:src="@drawable/ic_cancel"
+                    android:tint="@color/label" />
 
                 <Button
                     android:id="@+id/addCategory"
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
+                    android:layout_height="match_parent"
                     android:background="@drawable/custom_btn"
-                    android:text="Add Category"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:text="ADD"
+                    android:textColor="@color/label"
+                    android:textStyle="bold" />
+
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

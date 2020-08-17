@@ -15,5 +15,8 @@ data class CategoryEntity(
     val categoryName: String,
 
     @ColumnInfo(name="categoryImg")
-    val categoryImg: String
+    val categoryImg: String,
+
+    @ColumnInfo(name="userId")
+    val userId: Int
 ){}

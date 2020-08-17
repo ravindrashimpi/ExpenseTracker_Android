@@ -6,8 +6,105 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_rectangle">
+        android:background="@drawable/login_background">
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="250dp"
+            android:fontFamily="@font/baloo"
+            android:gravity="center_horizontal"
+            android:text="Sign In"
+            android:textColor="@color/signin"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="If you already registered"
+            android:textAlignment="center"
+            android:textColor="@color/sublabel"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+        <EditText
+            android:id="@+id/emailid"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/custom_email_icon"
+            android:ems="10"
+            android:hint="Email Id"
+            android:inputType="textEmailAddress"
+            android:padding="16dp"
+            android:text="ravindra.shimpi@gmail.com"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/custom_password_icon"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:text="12345"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailid" />
+
+        <Button
+            android:id="@+id/SignIn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/custom_btn"
+            android:text="SIGN IN"
+            android:textColor="@color/label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password" />
+
+        <TextView
+            android:id="@+id/msgLink"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Not a member?"
+            android:textColor="@color/sublabel"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/SignIn"
+            app:layout_constraintTop_toTopOf="@+id/SignIn" />
+
+        <TextView
+            android:id="@+id/registerLink"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=" Join"
+            android:textColor="@color/sublabel"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/msgLink"
+            app:layout_constraintTop_toTopOf="@+id/SignIn" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

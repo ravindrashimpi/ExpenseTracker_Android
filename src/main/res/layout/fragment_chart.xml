@@ -1,21 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".chart.ChartFragment">
+    android:fitsSystemWindows="true">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/piChart"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".chart.ChartFragment"
+        android:background="@drawable/dashboard_bg">
 
-    </com.github.mikephil.charting.charts.PieChart>
+        <TextView
+            android:id="@+id/chartDateView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/sublabel"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/totalIncome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textAlignment="center"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:drawableStart="@drawable/ic_rupee"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chartDateView" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remaining Budget"
+            android:textAlignment="center"
+            android:textColor="@color/label"
+            android:textSize="12sp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/totalIncome" />
+
+        <TextView
+            android:id="@+id/totalExpense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_rupee"
+            android:text="130000"
+            android:textAlignment="center"
+            android:textColor="@color/label"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:drawableTint="@color/label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/piChart"
+            android:layout_width="320dp"
+            android:layout_height="220dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="120dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/totalExpense" />
+
+        <TextView
+            android:id="@+id/yesterdayExpense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="25dp"
+            android:text="345"
+            android:textColor="@color/sublabel"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/piChart" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Yesterday Expense"
+            android:layout_marginStart="60dp"
+            android:textColor="@color/sublabel"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/yesterdayExpense" />
+
+        <TextView
+            android:id="@+id/todayExpense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:layout_marginRight="120dp"
+            android:textColor="@color/sublabel"
+            android:textSize="20sp"
+            android:layout_marginTop="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/piChart" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Today's Expense"
+            android:textColor="@color/sublabel"
+            android:layout_marginRight="80dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/todayExpense" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

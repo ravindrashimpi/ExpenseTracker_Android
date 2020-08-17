@@ -11,8 +11,8 @@
             android:title="Download Report" />
     </group>
 
-    <item android:title="Transaction">
-        <menu>
+<!--    <item android:title="Transaction">-->
+<!--        <menu>-->
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/createExpense"
@@ -23,19 +23,19 @@
                     android:icon="@drawable/ic_category"
                     android:title="Categories" />
             </group>
-        </menu>
-    </item>
+<!--        </menu>-->
+<!--    </item>-->
 
 
-    <item android:title="Profile">
-        <menu>
+<!--    <item android:title="Profile">-->
+<!--        <menu>-->
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/logout"
                     android:icon="@drawable/ic_logout"
                     android:title="Logout" />
             </group>
-        </menu>
-    </item>
+<!--        </menu>-->
+<!--    </item>-->
 
 </menu>

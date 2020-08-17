@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/expenseList"
-        android:name="com.deere.exptracker.list.ExpenseList"
+        android:name="com.deere.exptracker.expense.ExpenseList"
         android:label="fragment_expense_list"
         tools:layout="@layout/fragment_expense_list" />
     <fragment

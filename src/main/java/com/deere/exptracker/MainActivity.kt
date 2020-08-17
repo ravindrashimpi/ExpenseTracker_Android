@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 
-class MainActivity : FragmentActivity() {
+class MainActivity : AppCompatActivity() {
     var TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {

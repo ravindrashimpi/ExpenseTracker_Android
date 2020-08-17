@@ -3,22 +3,39 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:windowBackground">@color/windowBackground</item>
-        <item name="android:navigationBarColor" tools:targetApi="21">@color/navigationBarColor</item>
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="android:windowBackground">@color/windowBackground</item>-->
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/textColorPrimary</item>
+
+        <!-- Hint Color -->
+        <item name="android:textColorHint">@color/input_border</item>
+
+        <!-- For Material Dialog - DONOT DELETE -->
+        <item name="colorSurface">@color/label</item>
     </style>
 
-    <style name="FlatButton" parent="Theme.AppCompat.Light">
-        <item name="android:textColor">#ffffff</item>
-        <item name="android:background">#eb8423</item>
-    </style>
+
+<!--    <style name="FlatButton" parent="Theme.AppCompat.Light">-->
+<!--        <item name="android:textColor">#ffffff</item>-->
+<!--        <item name="android:background">#eb8423</item>-->
+<!--    </style>-->
 
     <!-- Error appreance -->
     <style name="error_appearance" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/error_color</item>
     </style>
+
+    <!-- DatePicker Theme -->
+    <style name="my_dialog_theme" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="colorAccent">@color/colorPrimary</item>                   <!--header background-->
+        <item name="android:windowBackground">@color/background</item>     <!--calendar background-->
+        <item name="android:colorControlActivated">@color/input_border</item> <!--selected day-->
+        <item name="android:textColorPrimary">@color/btnColor</item> <!--days of the month-->
+        <item name="android:textColorSecondary">@color/label</item>    <!--days of the week-->
+    </style>
+
+
 
 </resources>

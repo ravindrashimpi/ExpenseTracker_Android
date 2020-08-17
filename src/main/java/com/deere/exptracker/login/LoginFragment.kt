@@ -69,44 +69,44 @@ class LoginFragment : Fragment(), View.OnClickListener {
         navController = Navigation.findNavController(view)
 
         //Set the onClick listner for the SignIn and SignUp button
-        //binding.SignIn.setOnClickListener(this)
-        //binding.registerLink.setOnClickListener(this)
+        binding.SignIn.setOnClickListener(this)
+        binding.registerLink.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v!!.id) {
-//            R.id.SignIn -> {
-//                                var isValid: Boolean = true
-//                                if (binding.emailid.text.toString().isEmpty()) {
-//                                    binding.passwordInputLayout.isErrorEnabled = false
-//                                    binding.emailIdInputLayout.error = "Email Id is mandatory."
-//                                    isValid = false
-//                                } else if(binding.password.text.toString().isEmpty()) {
-//                                    binding.emailIdInputLayout.isErrorEnabled = false
-//                                    binding.passwordInputLayout.error = "Password is mandatory."
-//                                    isValid = false
-//                                } else {
-//                                    binding.emailIdInputLayout.isErrorEnabled = false
-//                                    binding.passwordInputLayout.isErrorEnabled = false
-//                                    isValid = true
-//                                }
-//
-//                                if(isValid) {
-//                                    Log.d(TAG,"EmailId: ${binding.emailid.text.toString()}")
-//                                    Log.d(TAG,"Password: ${binding.password.text.toString()}")
-//                                    //userViewModel.deleteAllUser()
-//                                    userViewModel.validateUser(binding.emailid.text.toString(), binding.password.text.toString()).observe(viewLifecycleOwner, Observer { userEntity ->
-//                                        Log.d(TAG, "IS User Valid: ${userEntity}")
-//                                        if(userEntity != null) {
-//                                            navController.navigate(R.id.action_loginFragment_to_dashboardFragment)
-//                                            sessionManagement.saveSession(userEntity)
-//                                        } else {
-//                                            Toast.makeText(context, "Invalid EmailId/Password.", Toast.LENGTH_SHORT).show();
-//                                        }
-//                                    })
-//                                }
-//                            }
-//            R.id.registerLink -> navController.navigate(R.id.action_loginFragment_to_signUpFragment)
+            R.id.SignIn -> {
+                                var isValid: Boolean = true
+                                if (binding.emailid.text.toString().isEmpty()) {
+                                    //binding.passwordInputLayout.isErrorEnabled = false
+                                    //binding.emailIdInputLayout.error = "Email Id is mandatory."
+                                    isValid = false
+                                } else if(binding.password.text.toString().isEmpty()) {
+                                   // binding.emailIdInputLayout.isErrorEnabled = false
+                                    //binding.passwordInputLayout.error = "Password is mandatory."
+                                    isValid = false
+                                } else {
+                                    //binding.emailIdInputLayout.isErrorEnabled = false
+                                    //binding.passwordInputLayout.isErrorEnabled = false
+                                    isValid = true
+                                }
+
+                                if(isValid) {
+                                    Log.d(TAG,"EmailId: ${binding.emailid.text.toString()}")
+                                    Log.d(TAG,"Password: ${binding.password.text.toString()}")
+                                    //userViewModel.deleteAllUser()
+                                    userViewModel.validateUser(binding.emailid.text.toString(), binding.password.text.toString()).observe(viewLifecycleOwner, Observer { userEntity ->
+                                        Log.d(TAG, "IS User Valid: ${userEntity}")
+                                        if(userEntity != null) {
+                                            navController.navigate(R.id.action_loginFragment_to_dashboardFragment)
+                                            sessionManagement.saveSession(userEntity)
+                                        } else {
+                                            Toast.makeText(context, "Invalid EmailId/Password.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                }
+                            }
+            R.id.registerLink -> navController.navigate(R.id.action_loginFragment_to_signUpFragment)
         }
     }
 

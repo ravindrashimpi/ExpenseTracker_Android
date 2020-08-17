@@ -12,28 +12,32 @@ import kotlinx.coroutines.launch
 class CategoryViewModel(private val categoryRepository: CategoryRepository): ViewModel() {
     val TAG = "CategoryViewModel"
 
-    fun addCategory(category: CategoryEntity): LiveData<Long> {
-        var isCategoryAdded = MutableLiveData<Long>()
-        viewModelScope.launch {
-            isCategoryAdded.postValue(categoryRepository.addCategory(category))
-            Log.d(TAG, "CategoryAdded: ${isCategoryAdded}")
-        }
-        return isCategoryAdded
+    suspend fun addCategory(category: CategoryEntity): Long {
+        return categoryRepository.addCategory(category)
     }
 
-    fun listAllCategories(): LiveData<MutableList<CategoryEntity>> {
+    fun listAllCategories(pUserId: Int): LiveData<MutableList<CategoryEntity>> {
         var categories = MutableLiveData<MutableList<CategoryEntity>>()
         viewModelScope.launch {
-            categories.postValue(categoryRepository.listAllCategory())
+            categories.postValue(categoryRepository.listAllCategory(pUserId))
             Log.d(TAG, "ListCategories: ${categories}")
         }
         return categories
     }
 
-    fun deleteCategory(category: CategoryEntity) {
-        viewModelScope.launch {
-            categoryRepository.deleteCategory(category)
-        }
+    suspend fun deleteCategory(category: CategoryEntity) : Int{
+        return categoryRepository.deleteCategory(category)
     }
 
+    suspend fun getCategoryById(catId: Int, pUserId: Int): CategoryEntity {
+        return categoryRepository.getCategoryById(catId, pUserId)
+    }
+
+    suspend fun updateCategory(categoryEntity: CategoryEntity): Int {
+        return categoryRepository.updateCategory(categoryEntity)
+    }
+
+    suspend fun isCategoryExist(pUserId: Int): Int {
+        return categoryRepository.isCategoryExist(pUserId)
+    }
 }

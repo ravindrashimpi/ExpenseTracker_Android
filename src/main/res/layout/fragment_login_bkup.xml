@@ -85,8 +85,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
                             android:text="Forgot Password?"
-                            android:textAlignment="center"
-                            android:textColor="@color/textColorDisable" />
+                            android:textAlignment="center"/>
+<!--                            android:textColor="@color/textColorDisable" />-->
 
                         <Button
                             android:id="@+id/SignIn"
@@ -110,8 +110,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="Not a member ?"
-                            android:textColor="@color/textColorDisable" />
+                            android:text="Not a member ?"/>
+<!--                            android:textColor="@color/textColorDisable" />-->
 
                         <TextView
                             android:id="@+id/registerLink"

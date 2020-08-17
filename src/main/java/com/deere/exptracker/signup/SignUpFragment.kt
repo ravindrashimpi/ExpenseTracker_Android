@@ -62,6 +62,7 @@ class SignUpFragment : Fragment(), View.OnClickListener, View.OnFocusChangeListe
         binding.emailid.setOnFocusChangeListener(this)
         binding.password.setOnFocusChangeListener(this)
         binding.confirmPassword.setOnFocusChangeListener(this)
+        binding.signLink.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -69,19 +70,19 @@ class SignUpFragment : Fragment(), View.OnClickListener, View.OnFocusChangeListe
             R.id.registerBTN -> {
                 var isValid: Boolean = true
                 if (binding.firstName.text.toString().isEmpty()) {
-                    binding.firstNameInputLayout.error = "Please enter First Name."
+                    //binding.firstNameInputLayout.error = "Please enter First Name."
                     isValid = false
                 } else if (binding.lastName.text.toString().isEmpty()) {
-                    binding.lastNameInputLayout.error = "Please enter Last Name."
+                    //binding.lastNameInputLayout.error = "Please enter Last Name."
                     isValid = false
                 } else if (binding.emailid.text.toString().isEmpty()) {
-                    binding.regEmailIdInputLayout.error = "Please enter Email-Id."
+                    //binding.regEmailIdInputLayout.error = "Please enter Email-Id."
                     isValid = false
                 } else if (binding.password.text.toString().isEmpty()) {
-                    binding.regPasswordInputLayout.error = "Please enter Password."
+                    //binding.regPasswordInputLayout.error = "Please enter Password."
                     isValid = false
                 } else if (binding.confirmPassword.text.toString().isEmpty()) {
-                    binding.confirmPasswordInputLayout.error = "Please enter Confirm Password."
+                    //binding.confirmPasswordInputLayout.error = "Please enter Confirm Password."
                     isValid = false
                 } else {
                     isValid = true
@@ -99,16 +100,19 @@ class SignUpFragment : Fragment(), View.OnClickListener, View.OnFocusChangeListe
                     Toast.makeText(context, "Succesful Registration", Toast.LENGTH_SHORT).show();
                 }
             }
+            R.id.signLink -> {
+                navController.navigate(R.id.loginFragment)
+            }
         }
     }
 
     override fun onFocusChange(v: View?, hasFocus: Boolean) {
         when(v!!.id) {
-            R.id.firstName -> { if(!hasFocus) binding.firstNameInputLayout.error = "" }
-            R.id.lastName -> { if(!hasFocus) binding.lastNameInputLayout.error = "" }
-            R.id.emailid -> { if(!hasFocus) binding.regEmailIdInputLayout.error = "" }
-            R.id.password -> { if(!hasFocus) binding.regPasswordInputLayout.error = "" }
-            R.id.confirmPassword -> { if(!hasFocus) binding.confirmPasswordInputLayout.error = "" }
+//            R.id.firstName -> { if(!hasFocus) binding.firstNameInputLayout.error = "" }
+//            R.id.lastName -> { if(!hasFocus) binding.lastNameInputLayout.error = "" }
+//            R.id.emailid -> { if(!hasFocus) binding.regEmailIdInputLayout.error = "" }
+//            R.id.password -> { if(!hasFocus) binding.regPasswordInputLayout.error = "" }
+//            R.id.confirmPassword -> { if(!hasFocus) binding.confirmPasswordInputLayout.error = "" }
         }
     }
 

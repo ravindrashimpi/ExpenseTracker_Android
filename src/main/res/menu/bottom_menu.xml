@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/dashboardFragment"
         android:icon="@drawable/ic_dashboard"
-        android:title="Dashboard" />
+        android:title="Dashboard"
+        app:cnb_iconColor="@color/label"/>
     <item
         android:id="@+id/expenseFragment"
         android:icon="@drawable/ic_expense"
-        android:title="Expense" />
+        android:title="Expense"
+        app:cnb_iconColor="@color/label"/>
     <item
         android:id="@+id/listCategoryFragment"
         android:icon="@drawable/ic_category"
-        android:title="Category" />
+        android:title="Category"
+        app:cnb_iconColor="@color/label"/>
+
     <item
-        android:id="@+id/nav_Category"
-        android:icon="@drawable/ic_category"
-        android:title="Category" />
+        android:id="@+id/incomeFragment"
+        android:icon="@drawable/ic_rupee"
+        android:title="Income"
+        app:cnb_iconColor="@color/label"/>
+<!--    <item-->
+<!--        android:id="@+id/nav_Category"-->
+<!--        android:icon="@drawable/ic_category"-->
+<!--        android:title="Category"-->
+<!--        app:cnb_backgroundColor="@color/bottom_toolbar_click_bg_color"-->
+<!--        app:cnb_iconColor="@color/label"/>-->
     <item
         android:id="@+id/nav_signout"
         android:icon="@drawable/ic_signout"
-        android:title="SignOut" />
+        android:title="SignOut"
+        app:cnb_iconColor="@color/label"/>
 </menu>
